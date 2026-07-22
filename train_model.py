@@ -1,162 +1,273 @@
-# ==========================================================
-# Ford Car Price Predictor
-# train_model.py
-# ==========================================================
+# ==========================================
+# Import Required Libraries
+# ==========================================
 
-# ==========================================================
-# Q1. Import Required Libraries
-# ==========================================================
+import pandas as pd          # For loading and handling dataset
+import joblib                # For saving and loading ML model
 
-import pandas as pd
-import joblib
-
+# Import Machine Learning modules
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
+from sklearn.linear_model import LogisticRegression
 
-
-# ==========================================================
-# Q2. Load Dataset
-# ==========================================================
-
-df = pd.read_csv("ford_car_dataset.csv")
-
-print(df.head())
-
-print("\nDataset Information:\n")
-print(df.info())
-
-print("\nColumn Names:\n")
-print(df.columns)
-
-print("\nDataset Shape:")
-print(df.shape)
-
-
-# ==========================================================
-# Q3. One-Hot Encoding
-# ==========================================================
-
-df = pd.get_dummies(
-    df,
-    columns=["model", "transmission", "fuelType"]
+# Import evaluation metrics
+from sklearn.metrics import (
+    confusion_matrix,
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    classification_report
 )
 
-print("\nAfter One-Hot Encoding:")
+# ==========================================
+# Q1. Data Loading & Preprocessing
+# ==========================================
+
+# Load Heart Disease Dataset
+df = pd.read_csv("heart.csv")
+
+# Display first 5 rows of dataset
+print("First 5 Records:")
 print(df.head())
 
-print("\nNew Shape:")
-print(df.shape)
+# Display dataset information
+print("\nDataset Information:")
+print(df.info())
 
+# Display dataset shape
+print("\nDataset Shape:", df.shape)
 
-# ==========================================================
-# Q4. Feature Selection
-# ==========================================================
+# ------------------------------------------
+# Separate Features (X) and Target (y)
+# ------------------------------------------
 
-X = df.drop("price", axis=1)
+# Independent variables (Input Features)
+X = df.drop("HeartDisease", axis=1)
 
-y = df["price"]
+# Dependent variable (Target)
+y = df["HeartDisease"]
 
-print("\nFeatures Shape :", X.shape)
-print("Target Shape :", y.shape)
+# ------------------------------------------
+# Encode Categorical Columns
+# ------------------------------------------
 
-print("\nFirst 5 Target Values:")
-print(y.head())
+# Convert categorical columns into numeric format
+# drop_first=True avoids dummy variable trap
+X = pd.get_dummies(X, drop_first=True)
 
+# Save column names for future prediction
+columns = X.columns
 
-# ==========================================================
-# Q5. Train-Test Split
-# ==========================================================
+print("\nEncoded Feature Columns:")
+print(columns)
 
+# ==========================================
+# Q2. Train-Test Split
+# ==========================================
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Load dataset
+df = pd.read_csv("heart.csv")
+
+# Separate Features and Target
+X = df.drop("HeartDisease", axis=1)
+y = df["HeartDisease"]
+
+# Encode categorical columns
+X = pd.get_dummies(X, drop_first=True)
+
+# Now Split the Data
 X_train, X_test, y_train, y_test = train_test_split(
-
     X,
     y,
     test_size=0.20,
     random_state=42
-
 )
 
-print("\nTraining Data Shape")
-print("X_train :", X_train.shape)
-print("y_train :", y_train.shape)
+print(X_train.shape)
+print(X_test.shape)
+print(y_train.shape)
+print(y_test.shape)
 
-print("\nTesting Data Shape")
-print("X_test :", X_test.shape)
-print("y_test :", y_test.shape)
+# ==========================================
+# Q3. Building Logistic Regression Model
+# ==========================================
 
+# Import Logistic Regression algorithm
+from sklearn.linear_model import LogisticRegression
 
-# ==========================================================
-# Q6. Feature Scaling
-# ==========================================================
+# ------------------------------------------
+# Create the Logistic Regression model
+# ------------------------------------------
 
-scaler = StandardScaler()
+# max_iter=1000 increases the maximum number
+# of iterations to ensure the model converges.
+model = LogisticRegression(max_iter=1000)
 
-numerical_columns = [
-    "year",
-    "mileage",
-    "tax",
-    "mpg",
-    "engineSize"
-]
+# ------------------------------------------
+# Train (Fit) the Model
+# ------------------------------------------
 
-X_train[numerical_columns] = scaler.fit_transform(
-    X_train[numerical_columns]
-)
-
-X_test[numerical_columns] = scaler.transform(
-    X_test[numerical_columns]
-)
-
-print("\nScaling Completed Successfully!")
-
-
-# ==========================================================
-# Q7. Train Linear Regression Model
-# ==========================================================
-
-model = LinearRegression()
-
+# Train the model using the training dataset
 model.fit(X_train, y_train)
 
-print("\nModel Training Completed Successfully!")
+# Display success message
+print("\nLogistic Regression Model Trained Successfully!")
 
+# ==========================================
+# Q4. Making Predictions
+# ==========================================
 
-# ==========================================================
-# Q8. Prediction
-# ==========================================================
-
+# Predict values using testing dataset
 y_pred = model.predict(X_test)
 
-print("\nFirst 5 Predictions:")
+# Display first 10 actual values
+print("\nFirst 10 Actual Values:")
+print(y_test.values[:10])
 
-print(y_pred[:5])
-
-
-# ==========================================================
-# Q9. Model Evaluation (R2 Score)
-# ==========================================================
-
-r2 = r2_score(y_test, y_pred)
-
-print("\nR2 Score :", round(r2, 4))
+# Display first 10 predicted values
+print("\nFirst 10 Predicted Values:")
+print(y_pred[:10])
 
 
-# ==========================================================
-# Q10. Save Model Files
-# ==========================================================
+# ==========================================
+# Q5. Confusion Matrix
+# ==========================================
 
-joblib.dump(model, "LR_model.pkl")
+# Generate Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
 
-joblib.dump(scaler, "scaler.pkl")
+print("\nConfusion Matrix")
+print(cm)
 
-joblib.dump(X.columns.tolist(), "columns.pkl")
+# Extract values from Confusion Matrix
+TN = cm[0][0]
+FP = cm[0][1]
+FN = cm[1][0]
+TP = cm[1][1]
 
-print("\nFiles Saved Successfully!")
+# Display Confusion Matrix labels
+print("\nTrue Negative (TN):", TN)
+print("False Positive (FP):", FP)
+print("False Negative (FN):", FN)
+print("True Positive (TP):", TP)
 
-print("✔ LR_model.pkl")
+# ==========================================
+# Q6. Model Evaluation
+# ==========================================
 
-print("✔ scaler.pkl")
+# Calculate Accuracy
+accuracy = accuracy_score(y_test, y_pred)
 
-print("✔ columns.pkl")
+# Calculate Precision
+precision = precision_score(y_test, y_pred)
+
+# Calculate Recall
+recall = recall_score(y_test, y_pred)
+
+# Calculate F1 Score
+f1 = f1_score(y_test, y_pred)
+
+# Display Evaluation Metrics
+print("\nModel Evaluation")
+
+print("Accuracy :", accuracy)
+print("Precision:", precision)
+print("Recall   :", recall)
+print("F1 Score :", f1)
+
+# Display Classification Report
+print("\nClassification Report")
+print(classification_report(y_test, y_pred))
+
+# ==========================================
+# Q7. Save Model
+# ==========================================
+
+# Save trained Logistic Regression model
+joblib.dump(model, "heart_model.pkl")
+
+# Save feature column names
+joblib.dump(columns, "columns.pkl")
+
+# Save scaler
+# (No scaler used in this project, so saving None)
+joblib.dump(None, "scaler.pkl")
+
+print("\nModel Saved Successfully")
+
+
+# ==========================================
+# Q8. Loading & Testing Saved Model
+# ==========================================
+
+# Import required libraries
+import pandas as pd
+import joblib
+
+# ------------------------------------------
+# Load Saved Model and Objects
+# ------------------------------------------
+
+# Load the trained model
+loaded_model = joblib.load("heart_model.pkl")
+
+# Load the feature column names
+loaded_columns = joblib.load("columns.pkl")
+
+# Load the scaler (None in this project)
+loaded_scaler = joblib.load("scaler.pkl")
+
+print("Model Loaded Successfully!")
+
+# ------------------------------------------
+# Create Sample Input Data
+# ------------------------------------------
+
+sample = {
+    "Age": 45,
+    "Sex": "M",
+    "ChestPainType": "ATA",
+    "RestingBP": 130,
+    "Cholesterol": 230,
+    "FastingBS": 0,
+    "RestingECG": "Normal",
+    "MaxHR": 150,
+    "ExerciseAngina": "N",
+    "Oldpeak": 1.2,
+    "ST_Slope": "Up"
+}
+
+# Convert dictionary to DataFrame
+sample_df = pd.DataFrame([sample])
+
+# ------------------------------------------
+# Preprocess the Input Data
+# ------------------------------------------
+
+# Apply One-Hot Encoding
+sample_df = pd.get_dummies(sample_df)
+
+# Match feature columns with training data
+sample_df = sample_df.reindex(columns=loaded_columns, fill_value=0)
+
+# Apply scaling if a scaler exists
+if loaded_scaler is not None:
+    sample_df = loaded_scaler.transform(sample_df)
+
+# ------------------------------------------
+# Make Prediction
+# ------------------------------------------
+
+prediction = loaded_model.predict(sample_df)
+
+# Display Prediction Result
+print("\nPrediction Result:")
+
+if prediction[0] == 1:
+    print("❤️ Heart Disease: YES")
+else:
+    print("💚 Heart Disease: NO")
+
+    

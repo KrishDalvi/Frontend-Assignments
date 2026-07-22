@@ -71,3 +71,9 @@ st_slope = st.selectbox(
 
 if st.button("Predict"):
     st.success("Input received successfully!")
+
+
+
+    
+        #to run this app used this command 
+        #python -m streamlit run Q9app.py
