@@ -1,15 +1,15 @@
-# ==========================================
+# ==========================================================
+# Breast Cancer Prediction
+# train_model.py
+# ==========================================================
+
 # Import Required Libraries
-# ==========================================
+import pandas as pd
+import joblib
 
-import pandas as pd          # For loading and handling dataset
-import joblib                # For saving and loading ML model
-
-# Import Machine Learning modules
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.linear_model import LogisticRegression
-
-# Import evaluation metrics
 from sklearn.metrics import (
     confusion_matrix,
     accuracy_score,
@@ -19,65 +19,71 @@ from sklearn.metrics import (
     classification_report
 )
 
-# ==========================================
-# Q1. Data Loading & Preprocessing
-# ==========================================
+# ==========================================================
+# Q1. Dataset Loading
+# ==========================================================
 
-# Load Heart Disease Dataset
-df = pd.read_csv("heart.csv")
+print("========== Q1. Dataset Loading ==========")
 
-# Display first 5 rows of dataset
-print("First 5 Records:")
+df = pd.read_csv("data.csv")
+
+print("\nFirst 5 Records:")
 print(df.head())
 
-# Display dataset information
 print("\nDataset Information:")
 print(df.info())
 
-# Display dataset shape
-print("\nDataset Shape:", df.shape)
+print("\nDataset Shape:")
+print(df.shape)
 
-# ------------------------------------------
-# Separate Features (X) and Target (y)
-# ------------------------------------------
+# ==========================================================
+# Q2. Data Cleaning
+# ==========================================================
 
-# Independent variables (Input Features)
-X = df.drop("HeartDisease", axis=1)
+print("\n========== Q2. Data Cleaning ==========")
 
-# Dependent variable (Target)
-y = df["HeartDisease"]
+print("\nMissing Values:")
+print(df.isnull().sum())
 
-# ------------------------------------------
-# Encode Categorical Columns
-# ------------------------------------------
+# Remove unnecessary columns
+df.drop(columns=["id", "Unnamed: 32"], errors="ignore", inplace=True)
 
-# Convert categorical columns into numeric format
-# drop_first=True avoids dummy variable trap
-X = pd.get_dummies(X, drop_first=True)
+# Remove duplicate rows
+df.drop_duplicates(inplace=True)
 
-# Save column names for future prediction
-columns = X.columns
+# Remove missing values
+df.dropna(inplace=True)
 
-print("\nEncoded Feature Columns:")
-print(columns)
+print("\nCleaned Dataset Shape:")
+print(df.shape)
 
-# ==========================================
-# Q2. Train-Test Split
-# ==========================================
-import pandas as pd
-from sklearn.model_selection import train_test_split
+# ==========================================================
+# Q3 & Q4. Feature Selection and Preprocessing
+# ==========================================================
 
-# Load dataset
-df = pd.read_csv("heart.csv")
+print("\n========== Q3 & Q4 ==========")
 
-# Separate Features and Target
-X = df.drop("HeartDisease", axis=1)
-y = df["HeartDisease"]
+# Features and Target
+X = df.drop("diagnosis", axis=1)
+y = df["diagnosis"]
 
-# Encode categorical columns
-X = pd.get_dummies(X, drop_first=True)
+# Encode target
+encoder = LabelEncoder()
+y = encoder.fit_transform(y)
 
-# Now Split the Data
+# Scale Features
+scaler = StandardScaler()
+
+X = scaler.fit_transform(X)
+
+print("Preprocessing Completed Successfully.")
+
+# ==========================================================
+# Q5. Train-Test Split
+# ==========================================================
+
+print("\n========== Q5. Train Test Split ==========")
+
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -85,189 +91,121 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-print(X_train.shape)
-print(X_test.shape)
-print(y_train.shape)
-print(y_test.shape)
+print("X_train:", X_train.shape)
+print("X_test :", X_test.shape)
+print("y_train:", y_train.shape)
+print("y_test :", y_test.shape)
 
-# ==========================================
-# Q3. Building Logistic Regression Model
-# ==========================================
+# ==========================================================
+# Q6. Model Building
+# ==========================================================
 
-# Import Logistic Regression algorithm
-from sklearn.linear_model import LogisticRegression
+print("\n========== Q6. Model Building ==========")
 
-# ------------------------------------------
-# Create the Logistic Regression model
-# ------------------------------------------
-
-# max_iter=1000 increases the maximum number
-# of iterations to ensure the model converges.
 model = LogisticRegression(max_iter=1000)
 
-# ------------------------------------------
-# Train (Fit) the Model
-# ------------------------------------------
-
-# Train the model using the training dataset
 model.fit(X_train, y_train)
 
-# Display success message
-print("\nLogistic Regression Model Trained Successfully!")
+print("Model Trained Successfully.")
 
-# ==========================================
-# Q4. Making Predictions
-# ==========================================
+# ==========================================================
+# Q7. Prediction
+# ==========================================================
 
-# Predict values using testing dataset
+print("\n========== Q7. Prediction ==========")
+
 y_pred = model.predict(X_test)
 
-# Display first 10 actual values
-print("\nFirst 10 Actual Values:")
-print(y_test.values[:10])
+print("\nFirst 10 Actual Values")
+print(y_test[:10])
 
-# Display first 10 predicted values
-print("\nFirst 10 Predicted Values:")
+print("\nFirst 10 Predicted Values")
 print(y_pred[:10])
 
+# ==========================================================
+# Q8. Model Evaluation
+# ==========================================================
 
-# ==========================================
-# Q5. Confusion Matrix
-# ==========================================
+print("\n========== Q8. Model Evaluation ==========")
 
-# Generate Confusion Matrix
-cm = confusion_matrix(y_test, y_pred)
+print("\nAccuracy :", accuracy_score(y_test, y_pred))
+print("Precision:", precision_score(y_test, y_pred))
+print("Recall   :", recall_score(y_test, y_pred))
+print("F1 Score :", f1_score(y_test, y_pred))
 
 print("\nConfusion Matrix")
+cm = confusion_matrix(y_test, y_pred)
 print(cm)
 
-# Extract values from Confusion Matrix
-TN = cm[0][0]
-FP = cm[0][1]
-FN = cm[1][0]
-TP = cm[1][1]
-
-# Display Confusion Matrix labels
-print("\nTrue Negative (TN):", TN)
-print("False Positive (FP):", FP)
-print("False Negative (FN):", FN)
-print("True Positive (TP):", TP)
-
-# ==========================================
-# Q6. Model Evaluation
-# ==========================================
-
-# Calculate Accuracy
-accuracy = accuracy_score(y_test, y_pred)
-
-# Calculate Precision
-precision = precision_score(y_test, y_pred)
-
-# Calculate Recall
-recall = recall_score(y_test, y_pred)
-
-# Calculate F1 Score
-f1 = f1_score(y_test, y_pred)
-
-# Display Evaluation Metrics
-print("\nModel Evaluation")
-
-print("Accuracy :", accuracy)
-print("Precision:", precision)
-print("Recall   :", recall)
-print("F1 Score :", f1)
-
-# Display Classification Report
 print("\nClassification Report")
 print(classification_report(y_test, y_pred))
 
-# ==========================================
-# Q7. Save Model
-# ==========================================
+# ==========================================================
+# Q9. Save Model
+# ==========================================================
 
-# Save trained Logistic Regression model
-joblib.dump(model, "heart_model.pkl")
+print("\n========== Q9. Save Model ==========")
 
-# Save feature column names
-joblib.dump(columns, "columns.pkl")
+joblib.dump(model, "breast_cancer_model.pkl")
+joblib.dump(scaler, "scaler.pkl")
+joblib.dump(df.drop("diagnosis", axis=1).columns.tolist(), "columns.pkl")
 
-# Save scaler
-# (No scaler used in this project, so saving None)
-joblib.dump(None, "scaler.pkl")
+print("Model Saved Successfully.")
 
-print("\nModel Saved Successfully")
+# ==========================================================
+# Q10. Load Saved Model
+# ==========================================================
 
+print("\n========== Q10. Load Saved Model ==========")
 
-# ==========================================
-# Q8. Loading & Testing Saved Model
-# ==========================================
-
-# Import required libraries
-import pandas as pd
-import joblib
-
-# ------------------------------------------
-# Load Saved Model and Objects
-# ------------------------------------------
-
-# Load the trained model
-loaded_model = joblib.load("heart_model.pkl")
-
-# Load the feature column names
+loaded_model = joblib.load("breast_cancer_model.pkl")
+loaded_scaler = joblib.load("scaler.pkl")
 loaded_columns = joblib.load("columns.pkl")
 
-# Load the scaler (None in this project)
-loaded_scaler = joblib.load("scaler.pkl")
-
-print("Model Loaded Successfully!")
-
-# ------------------------------------------
-# Create Sample Input Data
-# ------------------------------------------
-
 sample = {
-    "Age": 45,
-    "Sex": "M",
-    "ChestPainType": "ATA",
-    "RestingBP": 130,
-    "Cholesterol": 230,
-    "FastingBS": 0,
-    "RestingECG": "Normal",
-    "MaxHR": 150,
-    "ExerciseAngina": "N",
-    "Oldpeak": 1.2,
-    "ST_Slope": "Up"
+    "radius_mean":17.99,
+    "texture_mean":10.38,
+    "perimeter_mean":122.8,
+    "area_mean":1001.0,
+    "smoothness_mean":0.1184,
+    "compactness_mean":0.2776,
+    "concavity_mean":0.3001,
+    "concave points_mean":0.1471,
+    "symmetry_mean":0.2419,
+    "fractal_dimension_mean":0.07871,
+    "radius_se":1.095,
+    "texture_se":0.9053,
+    "perimeter_se":8.589,
+    "area_se":153.4,
+    "smoothness_se":0.006399,
+    "compactness_se":0.04904,
+    "concavity_se":0.05373,
+    "concave points_se":0.01587,
+    "symmetry_se":0.03003,
+    "fractal_dimension_se":0.006193,
+    "radius_worst":25.38,
+    "texture_worst":17.33,
+    "perimeter_worst":184.6,
+    "area_worst":2019.0,
+    "smoothness_worst":0.1622,
+    "compactness_worst":0.6656,
+    "concavity_worst":0.7119,
+    "concave points_worst":0.2654,
+    "symmetry_worst":0.4601,
+    "fractal_dimension_worst":0.1189
 }
 
-# Convert dictionary to DataFrame
 sample_df = pd.DataFrame([sample])
 
-# ------------------------------------------
-# Preprocess the Input Data
-# ------------------------------------------
+sample_df = sample_df[loaded_columns]
 
-# Apply One-Hot Encoding
-sample_df = pd.get_dummies(sample_df)
+sample_scaled = loaded_scaler.transform(sample_df)
 
-# Match feature columns with training data
-sample_df = sample_df.reindex(columns=loaded_columns, fill_value=0)
+prediction = loaded_model.predict(sample_scaled)
 
-# Apply scaling if a scaler exists
-if loaded_scaler is not None:
-    sample_df = loaded_scaler.transform(sample_df)
-
-# ------------------------------------------
-# Make Prediction
-# ------------------------------------------
-
-prediction = loaded_model.predict(sample_df)
-
-# Display Prediction Result
-print("\nPrediction Result:")
+print("\nPrediction Result")
 
 if prediction[0] == 1:
-    print("❤️ Heart Disease: YES")
+    print("Tumor Prediction : Malignant")
 else:
-    print("💚 Heart Disease: NO")
-
-    
+    print("Tumor Prediction : Benign")
