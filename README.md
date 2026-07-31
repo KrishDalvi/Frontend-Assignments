@@ -256,7 +256,7 @@ https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)
 
 # 👨‍🎓 Submitted By
 
-**Name:** Om Prashant Kulawade
+**Name:** Krish Ashok Dalvi
 
 **College:** Zeal Polytechnic, Narhe, Pune
 
