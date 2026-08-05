@@ -1,273 +1,141 @@
-# 🎗️ Breast Cancer Prediction System
+# Assignment 26 – K-Means Clustering
 
-## ASSIGNMENT 22 (Optional Task)
+## Student Information
 
-### Student Information
-
-**Name:** Krish Ashok Dalvi
-**College:** Zeal Polytechnic, Narhe, Pune  
-**Branch:** Artificial Intelligence and Machine Learning (AIML)  
-**Domain:** Artificial Intelligence and Machine Learning (AIML)
+- **Name:** Krish Ashok Dalvi
+- **College:** Zeal Polytechnic, Narhe, Pune
+- **Branch:** Artificial Intelligence and Machine Learning (AIML)
+- **Domain:** Artificial Intelligence and Machine Learning (AIML)
 
 ---
 
-# 📌 Project Description
+## Assignment Overview
 
-The **Breast Cancer Prediction System** is a Machine Learning project developed using the **Logistic Regression** algorithm. The application predicts whether a breast tumor is **Malignant (Cancerous)** or **Benign (Non-Cancerous)** based on diagnostic features entered by the user.
-
-A **Streamlit Web Application** is developed to provide a simple and interactive interface for users to make predictions.
+This assignment demonstrates the implementation of **K-Means Clustering**, an unsupervised machine learning algorithm used to group similar data points into clusters. It covers synthetic data generation, data preprocessing, cluster visualization, the Elbow Method, and clustering on real-world datasets.
 
 ---
 
-# 📊 Dataset Information
+## Objectives
 
-**Dataset Name:** Breast Cancer Wisconsin (Diagnostic) Dataset
-
-**Target Variable:** `diagnosis`
-
-### Target Classes
-
-- **M** → Malignant (Cancer)
-- **B** → Benign (No Cancer)
-
----
-
-# 🎯 Objectives
-
-- Load the dataset
-- Perform Data Cleaning
-- Perform Exploratory Data Analysis (EDA)
-- Select Features
-- Scale Numerical Features
-- Train Logistic Regression Model
-- Evaluate Model Performance
-- Save and Load Trained Model
-- Develop Streamlit Web Application
+- Generate and analyze synthetic datasets.
+- Apply feature scaling using StandardScaler.
+- Perform K-Means clustering.
+- Visualize clusters using Seaborn and Matplotlib.
+- Determine the optimal number of clusters using the Elbow Method.
+- Apply clustering techniques on a real-world dataset.
+- Build a complete clustering pipeline for customer segmentation.
 
 ---
 
-# 🛠 Technologies Used
+## Assignment Questions
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
-- Scikit-learn
-- Joblib
-- Streamlit
+### Q1. Understanding & Dataset Creation
+- Generate a synthetic dataset using `make_blobs()`.
+- Convert the dataset into a Pandas DataFrame.
+- Display the first 10 rows and dataset shape.
 
----
+### Q2. Data Scaling
+- Apply Standard Scaling using `StandardScaler`.
+- Store the scaled dataset in `X_scaled`.
 
-# 📂 Project Structure
+### Q3. Basic K-Means Clustering
+- Train a K-Means model with **3 clusters**.
+- Predict cluster labels.
+- Add cluster labels to the DataFrame.
 
-```text
-Breast_Cancer_Prediction/
-│
-├── data.csv
-├── eda.ipynb
-├── train_model.py
-├── app.py
-├── breast_cancer_model.pkl
-├── scaler.pkl
-├── columns.pkl
-├── requirements.txt
-└── README.md
-```
+### Q4. Cluster Visualization
+- Create a scatter plot using Seaborn.
+- Visualize clusters using different colors.
 
----
+### Q5. Elbow Method
+- Compute inertia values for **K = 1 to 10**.
+- Plot the Elbow Curve.
+- Identify the optimal number of clusters.
 
-# ⚙ Installation
+### Q6. Final K-Means Model
+- Train the final model using the optimal K.
+- Predict cluster labels.
+- Display the number of samples in each cluster.
 
-Install the required libraries:
+### Q7. Final Cluster Visualization
+- Plot the final clusters.
+- Display cluster centroids.
 
-```bash
-python -m pip install -r requirements.txt
-```
+### Q8. Real Dataset Application
+- Load a real-world dataset (Iris or Mall Customers).
+- Select numerical features.
+- Scale the data.
+- Apply K-Means clustering.
+- Display cluster counts.
 
----
+### Q9. Elbow Method on Real Dataset
+- Apply the Elbow Method.
+- Select the optimal K.
+- Train the final model.
+- Visualize clusters or display cluster sizes.
 
-# ▶️ Steps to Run the Project
-
-## Step 1: Open EDA Notebook
-
-```bash
-jupyter notebook eda.ipynb
-```
-
-Perform:
-
-- Dataset Loading
-- Data Cleaning
-- Missing Value Handling
-- Exploratory Data Analysis
-- Feature Selection
-- Feature Scaling
+### Q10. Mini Project – Complete Clustering Pipeline
+- Load and explore the dataset.
+- Perform feature scaling.
+- Apply the Elbow Method.
+- Train the final K-Means model.
+- Visualize the clustering results.
 
 ---
 
-## Step 2: Train the Machine Learning Model
+## Libraries Used
 
-```bash
-python train_model.py
-```
-
-This will:
-
-- Train Logistic Regression Model
-- Evaluate Model
-- Save the trained files:
-
-```
-breast_cancer_model.pkl
-scaler.pkl
-columns.pkl
-```
+- pandas
+- numpy
+- matplotlib
+- seaborn
+- scikit-learn
 
 ---
 
-## Step 3: Run the Streamlit Application
+## Dataset Used
 
-```bash
-python -m streamlit run app.py
-```
+### Synthetic Dataset
+- Generated using `make_blobs()` from Scikit-learn.
 
-Open your browser and visit:
-
-```
-http://localhost:8501
-```
-
----
-
-# 📈 Exploratory Data Analysis (EDA)
-
-The following analyses are performed:
-
-- Dataset Information
-- Missing Value Analysis
-- Statistical Summary
-- Class Distribution
-- Correlation Heatmap
-- Histogram Visualization
-- Boxplot Visualization
-
----
-
-# 🤖 Machine Learning Workflow
-
-1. Dataset Loading
-2. Data Cleaning
-3. Exploratory Data Analysis (EDA)
-4. Feature Selection
-5. Feature Scaling
-6. Train-Test Split
-7. Logistic Regression Model Training
-8. Prediction
-9. Model Evaluation
-10. Save Model
-11. Load Saved Model
-12. Streamlit Deployment
-
----
-
-# 📊 Model Evaluation Metrics
-
-The following metrics are calculated:
-
-- Accuracy
-- Precision
-- Recall
-- F1 Score
-- Confusion Matrix
-- Classification Report
-
----
-
-# ✨ Features
-
-- Breast Cancer Prediction
-- Binary Classification
-- Data Cleaning
-- Exploratory Data Analysis (EDA)
-- Feature Selection
-- Standard Scaling
-- Logistic Regression
-- Model Evaluation
-- Save & Load Model
-- Interactive Streamlit Interface
-
----
-
-# 🎯 Prediction Output
-
-The application predicts one of the following:
-
-🟢 **Benign (No Cancer Detected)**
-
-🔴 **Malignant (Cancer Detected)**
-
----
-
-# 📸 Sample Output
-
-### Streamlit Home Page
-
-- User enters diagnostic feature values.
-- Clicks the **Predict** button.
-
-### Prediction Result
-
-```
-Prediction: Benign
-```
-
+### Real Dataset
+- Iris Dataset
 or
-
-```
-Prediction: Malignant
-```
+- Mall Customers Dataset
 
 ---
 
-# 📁 Generated Files
-
-After running the project:
+## Project Structure
 
 ```
-breast_cancer_model.pkl
-scaler.pkl
-columns.pkl
-```
+Assignment_26/
+│
+├── Assignment_26.ipynb
+├── README.md
+├── data/
+   └── Mall_Customers.csv
 
-These files are used by the Streamlit application for prediction.
 
----
+## Expected Outcome
 
-# 🌐 Dataset Source
+After completing this assignment, students will be able to:
 
-**Breast Cancer Wisconsin (Diagnostic) Dataset**
-
-UCI Machine Learning Repository
-
-https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)
-
----
-
-# 👨‍🎓 Submitted By
-
-**Name:** Krish Ashok Dalvi
-
-**College:** Zeal Polytechnic, Narhe, Pune
-
-**Branch:** Artificial Intelligence and Machine Learning (AIML)
-
-**Domain:** Artificial Intelligence and Machine Learning (AIML)
-
-**Assignment:** Session 22 – Optional Task (Binary Classification Project)
-
-**Academic Year:** 2026
+- Understand the K-Means clustering algorithm.
+- Perform feature scaling.
+- Determine the optimal number of clusters using the Elbow Method.
+- Visualize clustering results.
+- Apply clustering techniques to real-world datasets.
 
 ---
 
-# 🙏 Thank You
+## Submitted By
+
+**Krish Ashok Dalvi**
+
+Artificial Intelligence and Machine Learning (AIML)
+
+Zeal Polytechnic, Narhe, Pune
+
+---
+
+**Assignment 26 – AIML**
