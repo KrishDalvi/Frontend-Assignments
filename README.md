@@ -1,4 +1,4 @@
-# Assignment 26 – K-Means Clustering
+# Session 27 (AIML) – Assignment
 
 ## Student Information
 
@@ -9,81 +9,84 @@
 
 ---
 
-## Assignment Overview
+# Assignment Title
 
-This assignment demonstrates the implementation of **K-Means Clustering**, an unsupervised machine learning algorithm used to group similar data points into clusters. It covers synthetic data generation, data preprocessing, cluster visualization, the Elbow Method, and clustering on real-world datasets.
-
----
-
-## Objectives
-
-- Generate and analyze synthetic datasets.
-- Apply feature scaling using StandardScaler.
-- Perform K-Means clustering.
-- Visualize clusters using Seaborn and Matplotlib.
-- Determine the optimal number of clusters using the Elbow Method.
-- Apply clustering techniques on a real-world dataset.
-- Build a complete clustering pipeline for customer segmentation.
+**DBSCAN Clustering and Principal Component Analysis (PCA)**
 
 ---
 
-## Assignment Questions
+# Objective
 
-### Q1. Understanding & Dataset Creation
-- Generate a synthetic dataset using `make_blobs()`.
-- Convert the dataset into a Pandas DataFrame.
+The objective of this assignment is to understand density-based clustering using **DBSCAN**, compare it with **K-Means**, and apply **Principal Component Analysis (PCA)** for dimensionality reduction and visualization of high-dimensional datasets.
+
+---
+
+# Assignment Questions
+
+### Q1. Creating Non-Linear Dataset
+- Generate a synthetic moon dataset using `make_moons()`.
+- Convert it into a Pandas DataFrame.
 - Display the first 10 rows and dataset shape.
 
-### Q2. Data Scaling
-- Apply Standard Scaling using `StandardScaler`.
-- Store the scaled dataset in `X_scaled`.
+### Q2. Scaling the Data
+- Apply `StandardScaler` to normalize the dataset.
+- Store the scaled data in `X_scaled`.
 
-### Q3. Basic K-Means Clustering
-- Train a K-Means model with **3 clusters**.
+### Q3. K-Means on Non-Linear Data
+- Apply K-Means clustering (`n_clusters=2`).
 - Predict cluster labels.
-- Add cluster labels to the DataFrame.
-
-### Q4. Cluster Visualization
-- Create a scatter plot using Seaborn.
-- Visualize clusters using different colors.
-
-### Q5. Elbow Method
-- Compute inertia values for **K = 1 to 10**.
-- Plot the Elbow Curve.
-- Identify the optimal number of clusters.
-
-### Q6. Final K-Means Model
-- Train the final model using the optimal K.
-- Predict cluster labels.
-- Display the number of samples in each cluster.
-
-### Q7. Final Cluster Visualization
-- Plot the final clusters.
-- Display cluster centroids.
-
-### Q8. Real Dataset Application
-- Load a real-world dataset (Iris or Mall Customers).
-- Select numerical features.
-- Scale the data.
-- Apply K-Means clustering.
-- Display cluster counts.
-
-### Q9. Elbow Method on Real Dataset
-- Apply the Elbow Method.
-- Select the optimal K.
-- Train the final model.
-- Visualize clusters or display cluster sizes.
-
-### Q10. Mini Project – Complete Clustering Pipeline
-- Load and explore the dataset.
-- Perform feature scaling.
-- Apply the Elbow Method.
-- Train the final K-Means model.
 - Visualize the clustering results.
+
+### Q4. DBSCAN Clustering
+- Apply DBSCAN with:
+  - `eps = 0.3`
+  - `min_samples = 5`
+- Predict cluster labels.
+- Visualize the clustering results.
+
+### Q5. Comparing K-Means vs DBSCAN
+- Compare both clustering methods.
+- Explain why DBSCAN performs better on non-linear datasets and handles noise effectively.
+
+### Q6. Tuning DBSCAN Parameters
+- Experiment with different `eps` values:
+  - 0.2
+  - 0.3
+  - 0.4
+  - 0.5
+- Count clusters and noise points.
+- Identify the best `eps` value.
+
+### Q7. Creating High-Dimensional Dataset
+- Generate a synthetic dataset using `make_blobs()`.
+- Create:
+  - 500 samples
+  - 6 features
+  - 4 centers
+- Scale the dataset.
+
+### Q8. Applying PCA
+- Reduce the dataset to **2 Principal Components**.
+- Create a DataFrame with **PC1** and **PC2**.
+- Display the explained variance ratio.
+
+### Q9. Visualizing PCA Results
+- Plot the two principal components.
+- Color the points using the original cluster labels.
+- Explain the meaning of the explained variance ratio.
+
+### Q10. Mini Project – Complete Pipeline
+Perform the complete machine learning workflow:
+1. Load a real-world dataset
+2. Select numerical features
+3. Scale the data
+4. Apply DBSCAN
+5. Apply PCA
+6. Visualize the final results
 
 ---
 
-## Libraries Used
+# Libraries Used
 
 - pandas
 - numpy
@@ -93,42 +96,47 @@ This assignment demonstrates the implementation of **K-Means Clustering**, an un
 
 ---
 
-## Dataset Used
+# Datasets Used
 
-### Synthetic Dataset
-- Generated using `make_blobs()` from Scikit-learn.
+### Synthetic Datasets
+- Moon Dataset (`make_moons`)
+- Blob Dataset (`make_blobs`)
 
 ### Real Dataset
-- Iris Dataset
+- Wine Dataset (Scikit-learn)
 or
-- Mall Customers Dataset
+- Iris Dataset (Scikit-learn)
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```
-Assignment_26/
+Session_27_AIML_Assignment/
 │
-├── Assignment_26.ipynb
+├── Session_27_Assignment.ipynb
 ├── README.md
+│
 ├── data/
-   └── Mall_Customers.csv
+   ├── moon_dataset.csv
+   ├── blobs_dataset.csv
+   └── wine_dataset.csv
+---
 
-
-## Expected Outcome
+# Expected Outcome
 
 After completing this assignment, students will be able to:
 
-- Understand the K-Means clustering algorithm.
-- Perform feature scaling.
-- Determine the optimal number of clusters using the Elbow Method.
-- Visualize clustering results.
-- Apply clustering techniques to real-world datasets.
+- Understand the working of DBSCAN clustering.
+- Compare K-Means and DBSCAN algorithms.
+- Tune DBSCAN parameters effectively.
+- Apply PCA for dimensionality reduction.
+- Visualize high-dimensional datasets.
+- Build a complete clustering and PCA pipeline using a real-world dataset.
 
 ---
 
-## Submitted By
+# Submitted By
 
 **Krish Ashok Dalvi**
 
@@ -138,4 +146,4 @@ Zeal Polytechnic, Narhe, Pune
 
 ---
 
-**Assignment 26 – AIML**
+**Session 27 – AIML Assignment**
