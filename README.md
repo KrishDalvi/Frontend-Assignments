@@ -1,149 +1,198 @@
-# Session 27 (AIML) – Assignment
+# AIML Assignment - Session 28: Emotions Dataset Text Preprocessing Pipeline
 
-## Student Information
+## Student Details
 
 - **Name:** Krish Ashok Dalvi
 - **College:** Zeal Polytechnic, Narhe, Pune
 - **Branch:** Artificial Intelligence and Machine Learning (AIML)
-- **Domain:** Artificial Intelligence and Machine Learning (AIML)
+- **Subject:** Artificial Intelligence and Machine Learning
+- **Session:** 28
+- **Topic:** Text Preprocessing using the Emotions Dataset
 
 ---
 
-# Assignment Title
+## Objective
 
-**DBSCAN Clustering and Principal Component Analysis (PCA)**
-
----
-
-# Objective
-
-The objective of this assignment is to understand density-based clustering using **DBSCAN**, compare it with **K-Means**, and apply **Principal Component Analysis (PCA)** for dimensionality reduction and visualization of high-dimensional datasets.
+The objective of this assignment is to perform text preprocessing on the Emotions Dataset using Python. The preprocessing steps help clean and prepare text data before applying machine learning or deep learning algorithms.
 
 ---
 
-# Assignment Questions
+## Tools & Technologies Used
 
-### Q1. Creating Non-Linear Dataset
-- Generate a synthetic moon dataset using `make_moons()`.
-- Convert it into a Pandas DataFrame.
-- Display the first 10 rows and dataset shape.
-
-### Q2. Scaling the Data
-- Apply `StandardScaler` to normalize the dataset.
-- Store the scaled data in `X_scaled`.
-
-### Q3. K-Means on Non-Linear Data
-- Apply K-Means clustering (`n_clusters=2`).
-- Predict cluster labels.
-- Visualize the clustering results.
-
-### Q4. DBSCAN Clustering
-- Apply DBSCAN with:
-  - `eps = 0.3`
-  - `min_samples = 5`
-- Predict cluster labels.
-- Visualize the clustering results.
-
-### Q5. Comparing K-Means vs DBSCAN
-- Compare both clustering methods.
-- Explain why DBSCAN performs better on non-linear datasets and handles noise effectively.
-
-### Q6. Tuning DBSCAN Parameters
-- Experiment with different `eps` values:
-  - 0.2
-  - 0.3
-  - 0.4
-  - 0.5
-- Count clusters and noise points.
-- Identify the best `eps` value.
-
-### Q7. Creating High-Dimensional Dataset
-- Generate a synthetic dataset using `make_blobs()`.
-- Create:
-  - 500 samples
-  - 6 features
-  - 4 centers
-- Scale the dataset.
-
-### Q8. Applying PCA
-- Reduce the dataset to **2 Principal Components**.
-- Create a DataFrame with **PC1** and **PC2**.
-- Display the explained variance ratio.
-
-### Q9. Visualizing PCA Results
-- Plot the two principal components.
-- Color the points using the original cluster labels.
-- Explain the meaning of the explained variance ratio.
-
-### Q10. Mini Project – Complete Pipeline
-Perform the complete machine learning workflow:
-1. Load a real-world dataset
-2. Select numerical features
-3. Scale the data
-4. Apply DBSCAN
-5. Apply PCA
-6. Visualize the final results
+- Python 3.x
+- Pandas
+- NumPy
+- Matplotlib
+- Regular Expressions (re)
+- String Module
+- NLTK
+- Scikit-learn
 
 ---
 
-# Libraries Used
+## Dataset
 
-- pandas
-- numpy
-- matplotlib
-- seaborn
-- scikit-learn
+Dataset Used: **Emotions Dataset for NLP**
 
----
+Files:
+- train.txt
+- test.txt
+- val.txt
 
-# Datasets Used
-
-### Synthetic Datasets
-- Moon Dataset (`make_moons`)
-- Blob Dataset (`make_blobs`)
-
-### Real Dataset
-- Wine Dataset (Scikit-learn)
-or
-- Iris Dataset (Scikit-learn)
-
----
-
-# Project Structure
+Dataset Format:
 
 ```
-Session_27_AIML_Assignment/
-│
-├── Session_27_Assignment.ipynb
-├── README.md
-│
-├── data/
-   ├── moon_dataset.csv
-   ├── blobs_dataset.csv
-   └── wine_dataset.csv
----
-
-# Expected Outcome
-
-After completing this assignment, students will be able to:
-
-- Understand the working of DBSCAN clustering.
-- Compare K-Means and DBSCAN algorithms.
-- Tune DBSCAN parameters effectively.
-- Apply PCA for dimensionality reduction.
-- Visualize high-dimensional datasets.
-- Build a complete clustering and PCA pipeline using a real-world dataset.
+text;emotion
+i didnt feel humiliated;sadness
+i feel romantic too;love
+```
 
 ---
 
-# Submitted By
+## Assignment Tasks
+
+### Q1. Load the Dataset
+
+- Load the dataset using Pandas.
+- Display the first 10 rows.
+- Display dataset shape.
+- Check for missing values.
+
+---
+
+### Q2. Explore Target Labels
+
+- Display unique emotion labels.
+- Encode labels using LabelEncoder.
+- Create a mapping dictionary.
+- Add encoded labels to the DataFrame.
+
+---
+
+### Q3. Lowercase Conversion
+
+- Convert all text to lowercase.
+- Compare original and lowercase text.
+- Explain why lowercasing is important.
+
+---
+
+### Q4. Remove Punctuation
+
+- Remove punctuation marks.
+- Display before and after results.
+
+---
+
+### Q5. Remove Numbers
+
+- Remove digits from the text.
+- Compare original and cleaned text.
+
+---
+
+### Q6. Remove Emojis & Special Characters
+
+- Keep only ASCII characters.
+- Remove emojis and special symbols.
+
+---
+
+### Q7. Remove Stopwords
+
+- Download NLTK resources.
+- Remove English stopwords.
+- Display cleaned samples.
+
+---
+
+### Q8. Complete Cleaning Pipeline
+
+Apply all preprocessing steps:
+
+- Lowercase
+- Remove punctuation
+- Remove numbers
+- Remove emojis
+- Remove stopwords
+
+Store the cleaned text in a new column called **cleaned_text**.
+
+---
+
+### Q9. Text Length Analysis
+
+- Calculate word count.
+- Plot histogram of text lengths.
+- Display:
+  - Average length
+  - Minimum length
+  - Maximum length
+
+---
+
+### Q10. Mini Project
+
+Complete preprocessing pipeline:
+
+1. Load dataset
+2. Encode labels
+3. Clean text
+4. Save cleaned dataset as **cleaned_emotions.csv**
+5. Display emotion counts
+
+---
+
+## Libraries Used
+
+```python
+import pandas as pd
+import numpy as np
+import string
+import re
+import nltk
+import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import LabelEncoder
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+```
+
+---
+
+## Output
+
+The assignment performs the following preprocessing tasks:
+
+- Dataset loading
+- Label encoding
+- Lowercase conversion
+- Punctuation removal
+- Number removal
+- Emoji removal
+- Stopword removal
+- Complete text cleaning
+- Text length analysis
+- Save cleaned dataset
+
+---
+
+## Output Files
+
+- `cleaned_emotions.csv`
+
+---
+
+## Conclusion
+
+Text preprocessing is an essential step in Natural Language Processing (NLP). It removes unnecessary information such as punctuation, numbers, emojis, and stopwords while converting text into a standardized format. These preprocessing techniques improve the quality of data and help machine learning models achieve better performance in emotion classification tasks.
+
+---
+
+## Author
 
 **Krish Ashok Dalvi**
 
-Artificial Intelligence and Machine Learning (AIML)
-
 Zeal Polytechnic, Narhe, Pune
 
----
-
-**Session 27 – AIML Assignment**
+Artificial Intelligence and Machine Learning (AIML)
