@@ -1,4 +1,4 @@
-# AIML Assignment - Session 28: Emotions Dataset Text Preprocessing Pipeline
+# AIML Assignment - Session 29: Emotions Dataset Text Preprocessing Pipeline
 
 ## Student Details
 
@@ -6,7 +6,7 @@
 - **College:** Zeal Polytechnic, Narhe, Pune
 - **Branch:** Artificial Intelligence and Machine Learning (AIML)
 - **Subject:** Artificial Intelligence and Machine Learning
-- **Session:** 28
+- **Session:** 29
 - **Topic:** Text Preprocessing using the Emotions Dataset
 
 ---
